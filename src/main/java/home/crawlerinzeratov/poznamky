@@ -1,0 +1,23 @@
+Projekt: Crawler Inzeratov
+
+1. scanner
+- stale pripojeny k internetu a kazdu hodinu scanuje vybrane stranky
+- pripaja sa priamo do mysql databazy na serveri cez connector a uploaduje do nej nove data
+- databaza priamo v programe je teda zhodna s tou na serveri == vsetky updaty a inserty do lokalnej databazy sa vykonaju aj do vzdialenej
+- komunikacia s DB na serveri prebieha priamo bez autentifikacie
+- prezera si iba inzeraty pridane v aktualny den
+- kazdy inzerat ma kolonku kedy bol naposledy programom modifikovany, aby klienti vedeli ktore data si treba stahovat
+        1. ci je inzerat v DB skontroluje podla linku
+        2. neni v db tak sa vlozi a nastavi sa posledna modifikacia
+- po skonceni scannera sa zosynchronizuje lokalna databaza so vzdialenou podla poslednej modifikacie
+
+2. Filtrovac Inzeratov
+- po autentfikacii sa prihlasuje do DB na serveri a stahuje si nove updaty z tamojsej databazy
+- viest log o tom kto kedy nieco pozadoval a co sa mu poslalo
+
+AKO SPRAVIT AUTENTIFIKACIU?
+- prihlasi sa so svojou macadresou a appid a ak nie je macadresa zakazana tak mu vrati nazov DB a heslo s ktorymi sa prihlasi do DB
+AKO STIAHNUT IBA UPDATY KTORE ESTE NEMAM?
+- cez poslednu modifikaciu
+AKO SPRAVIT LOG?
+- pri kazdom selecte spravi aj insert do logu

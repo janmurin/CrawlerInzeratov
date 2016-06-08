@@ -1,0 +1,9 @@
+select * from remote_inzeraty where portal='http://reality.bazos.sk' order by time_inserted desc
+select * from aktualnosti
+select * from inzeraty order by time_inserted desc
+select * from remote_inzeraty where aktualny_link='http://reality.bazos.sk/inzerat/44717310/Rodinny-dom.php'
+SELECT * FROM remote_inzeraty WHERE portal='http://reality.bazos.sk' and time_inserted>timestamp('2015-01-30 17:30:55.000')
+
+select * from remote_inzeraty where aktualny_link not in (
+SELECT aktualny_link FROM inzeraty WHERE telefon not in (select telefon from(select telefon, count(*) as pocet from inzeraty group by telefon order by pocet desc)as T 
+                    where pocet > 10 ) and portal='http://reality.bazos.sk')
